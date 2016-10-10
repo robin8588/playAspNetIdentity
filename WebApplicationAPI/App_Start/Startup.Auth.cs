@@ -10,6 +10,7 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using WebApplicationAPI.Providers;
 using WebApplicationAPI.Models;
+using IdentityCore;
 
 namespace WebApplicationAPI
 {
