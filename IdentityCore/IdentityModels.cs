@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using System.Data.Entity;
+using IdentityCore.Migrations;
 
 namespace IdentityCore
 {
@@ -32,7 +34,12 @@ namespace IdentityCore
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-        
+
+        static ApplicationDbContext()
+        {
+            Database.SetInitializer<ApplicationDbContext>(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
+        }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
