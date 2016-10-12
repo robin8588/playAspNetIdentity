@@ -48,7 +48,7 @@ namespace IdentityCore
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
             };
-
+            
             // 配置密码的验证逻辑
             manager.PasswordValidator = new PasswordValidator
             {
