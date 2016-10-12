@@ -19,6 +19,7 @@ namespace WebApplicationMVC
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+            app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
 
             // 使应用程序可以使用 Cookie 来存储已登录用户的信息
             // 并使用 Cookie 来临时存储有关使用第三方登录提供程序登录的用户的信息
@@ -33,7 +34,7 @@ namespace WebApplicationMVC
                     // 这是一项安全功能，当你更改密码或者向帐户添加外部登录名时，将使用此功能。
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
                         validateInterval: TimeSpan.FromMinutes(30),
-                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
+                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager, DefaultAuthenticationTypes.ApplicationCookie))
                 }
             });            
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
@@ -47,9 +48,9 @@ namespace WebApplicationMVC
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
             // 取消注释以下行可允许使用第三方登录提供程序登录
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+            app.UseMicrosoftAccountAuthentication(
+                clientId: "d372bb14-f802-497c-806c-8bcda5cae52d",
+                clientSecret: "byY5TviXtNuboaqcfgBiYSG");
 
             //app.UseTwitterAuthentication(
             //   consumerKey: "",
@@ -64,6 +65,11 @@ namespace WebApplicationMVC
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+
+            app.Use(async (Context, next) =>
+            {
+                await next.Invoke();
+            });
         }
     }
 }
