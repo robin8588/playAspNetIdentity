@@ -16,6 +16,7 @@ using Microsoft.Owin.Security.OAuth;
 using WebApplicationAuth.Models;
 using WebApplicationAuth.Providers;
 using WebApplicationAuth.Results;
+using IdentityCore;
 
 namespace WebApplicationAuth.Controllers
 {
