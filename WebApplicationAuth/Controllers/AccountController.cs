@@ -329,7 +329,19 @@ namespace WebApplicationAuth.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser() { UserName = model.UserName };
+
+            switch (model.Type)
+            {
+                case RegisterType.Email:
+                    user.Email = model.UserName;
+                    break;
+                case RegisterType.Phone:
+                    user.PhoneNumber = model.UserName;
+                    break;
+                default:
+                    break;
+            }
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 

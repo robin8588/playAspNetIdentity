@@ -35,8 +35,8 @@ namespace WebApplicationAuth.Models
     public class RegisterBindingModel
     {
         [Required]
-        [Display(Name = "电子邮件")]
-        public string Email { get; set; }
+        [Display(Name = "电子邮件/手机号/用户名")]
+        public string UserName { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "{0} 必须至少包含 {2} 个字符。", MinimumLength = 6)]
@@ -48,6 +48,8 @@ namespace WebApplicationAuth.Models
         [Display(Name = "确认密码")]
         [Compare("Password", ErrorMessage = "密码和确认密码不匹配。")]
         public string ConfirmPassword { get; set; }
+
+        public RegisterType Type { get; set; }
     }
 
     public class RegisterExternalBindingModel
@@ -80,5 +82,12 @@ namespace WebApplicationAuth.Models
         [Display(Name = "确认新密码")]
         [Compare("NewPassword", ErrorMessage = "新密码和确认密码不匹配。")]
         public string ConfirmPassword { get; set; }
+    }
+
+    public enum RegisterType
+    {
+        UserName,
+        Email,
+        Phone
     }
 }

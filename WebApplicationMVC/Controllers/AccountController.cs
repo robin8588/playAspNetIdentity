@@ -77,7 +77,7 @@ namespace WebApplicationMVC.Controllers
             // 这不会计入到为执行帐户锁定而统计的登录失败次数中
             // 若要在多次输入错误密码的情况下触发帐户锁定，请更改为 shouldLockout: true
             var result = SignInStatus.Failure;
-            var user =await UserManager.FindByEmailAsync(model.Email);
+            ApplicationUser user =await UserManager.FindByEmailAsync(model.Email);
             if (user != null)
             {
                 if (user.EmailConfirmed)

@@ -49,8 +49,7 @@ namespace WebApplicationMVC.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "电子邮件")]
-        [EmailAddress]
+        [Display(Name = "电子邮件/手机号/用户名")]
         public string Email { get; set; }
 
         [Required]

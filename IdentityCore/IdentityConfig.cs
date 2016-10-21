@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+using IdentityCore.Validators;
 
 namespace IdentityCore
 {
@@ -43,11 +44,7 @@ namespace IdentityCore
         {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
             // 配置用户名的验证逻辑
-            manager.UserValidator = new UserValidator<ApplicationUser>(manager)
-            {
-                AllowOnlyAlphanumericUserNames = false,
-                RequireUniqueEmail = true
-            };
+            manager.UserValidator = new UserEmailPhoneValidator(manager);
             
             // 配置密码的验证逻辑
             manager.PasswordValidator = new PasswordValidator
@@ -87,6 +84,24 @@ namespace IdentityCore
                     };
             }
             return manager;
+        }
+
+        public ApplicationUser FindByPhone(string phone)
+        {
+            if (phone == null)
+            {
+                throw new ArgumentNullException("phone");
+            }
+            return this.Users.SingleOrDefault(v => v.PhoneNumber == phone);
+        }
+
+        public async Task<ApplicationUser> FindByPhoneAsync(string phone)
+        {
+            if (phone == null)
+            {
+                throw new ArgumentNullException("phone");
+            }
+            return await this.Users.SingleOrDefaultAsync(v => v.PhoneNumber == phone);
         }
     }
 

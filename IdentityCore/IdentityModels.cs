@@ -18,6 +18,15 @@ namespace IdentityCore
             // 在此处添加自定义用户声明
             return userIdentity;
         }
+
+        public UserNameType userNameType { get; set; }
+    }
+
+    public enum UserNameType
+    {
+        UserName,
+        Email,
+        Phone
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
