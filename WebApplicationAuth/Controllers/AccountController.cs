@@ -31,6 +31,11 @@ namespace WebApplicationAuth.Controllers
         {
         }
 
+        public AccountController(ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+        }
+
         public AccountController(ApplicationUserManager userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
         {
@@ -333,10 +338,10 @@ namespace WebApplicationAuth.Controllers
 
             switch (model.Type)
             {
-                case RegisterType.Email:
+                case UserNameType.Email:
                     user.Email = model.UserName;
                     break;
-                case RegisterType.Phone:
+                case UserNameType.Phone:
                     user.PhoneNumber = model.UserName;
                     break;
                 default:

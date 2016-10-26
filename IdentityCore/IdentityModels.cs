@@ -19,7 +19,7 @@ namespace IdentityCore
             return userIdentity;
         }
 
-        public UserNameType userNameType { get; set; }
+        public UserNameType UserNameType { get; set; }
     }
 
     public enum UserNameType

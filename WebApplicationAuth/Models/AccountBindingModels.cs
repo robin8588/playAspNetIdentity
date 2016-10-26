@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
+using IdentityCore;
 
 namespace WebApplicationAuth.Models
 {
@@ -49,7 +50,7 @@ namespace WebApplicationAuth.Models
         [Compare("Password", ErrorMessage = "密码和确认密码不匹配。")]
         public string ConfirmPassword { get; set; }
 
-        public RegisterType Type { get; set; }
+        public UserNameType Type { get; set; }
     }
 
     public class RegisterExternalBindingModel
@@ -82,12 +83,5 @@ namespace WebApplicationAuth.Models
         [Display(Name = "确认新密码")]
         [Compare("NewPassword", ErrorMessage = "新密码和确认密码不匹配。")]
         public string ConfirmPassword { get; set; }
-    }
-
-    public enum RegisterType
-    {
-        UserName,
-        Email,
-        Phone
     }
 }
