@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationMVC", "WebApplicationMVC\WebApplicationMVC.csproj", "{D63DC730-6000-4CE6-BDAA-8B805363C57B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityCore", "IdentityCore\IdentityCore.csproj", "{7FF8502E-905A-48E5-8557-F0D3AA326AC5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationAuth", "WebApplicationAuth\WebApplicationAuth.csproj", "{C081AC0D-2983-45B6-985A-51BCEEA84AAE}"
@@ -13,16 +11,38 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationAPI", "WebApp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{824893CB-F9A1-4B22-9B18-F5EAD2049E7B}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WabApplicationStatic", "WabApplicationStatic\", "{E6004D81-1726-49BE-A808-21F2923F08AB}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_36233"
+		Debug.AspNetCompiler.PhysicalPath = "WabApplicationStatic\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_36233\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_36233"
+		Release.AspNetCompiler.PhysicalPath = "WabApplicationStatic\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_36233\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "36233"
+		SlnRelativePath = "WabApplicationStatic\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCore", "WebCore\WebCore.csproj", "{651DFED8-4900-41E9-9F36-57190A19D2C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationAdmin", "WebApplicationAdmin\WebApplicationAdmin.csproj", "{AAD5CC3A-A4A0-41B5-A7D1-09C5AFE377C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D63DC730-6000-4CE6-BDAA-8B805363C57B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D63DC730-6000-4CE6-BDAA-8B805363C57B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D63DC730-6000-4CE6-BDAA-8B805363C57B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D63DC730-6000-4CE6-BDAA-8B805363C57B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7FF8502E-905A-48E5-8557-F0D3AA326AC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7FF8502E-905A-48E5-8557-F0D3AA326AC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FF8502E-905A-48E5-8557-F0D3AA326AC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +59,18 @@ Global
 		{824893CB-F9A1-4B22-9B18-F5EAD2049E7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{824893CB-F9A1-4B22-9B18-F5EAD2049E7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{824893CB-F9A1-4B22-9B18-F5EAD2049E7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6004D81-1726-49BE-A808-21F2923F08AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6004D81-1726-49BE-A808-21F2923F08AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6004D81-1726-49BE-A808-21F2923F08AB}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6004D81-1726-49BE-A808-21F2923F08AB}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{651DFED8-4900-41E9-9F36-57190A19D2C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{651DFED8-4900-41E9-9F36-57190A19D2C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{651DFED8-4900-41E9-9F36-57190A19D2C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{651DFED8-4900-41E9-9F36-57190A19D2C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAD5CC3A-A4A0-41B5-A7D1-09C5AFE377C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAD5CC3A-A4A0-41B5-A7D1-09C5AFE377C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAD5CC3A-A4A0-41B5-A7D1-09C5AFE377C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAD5CC3A-A4A0-41B5-A7D1-09C5AFE377C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
