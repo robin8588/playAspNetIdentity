@@ -8,27 +8,51 @@
 @section scripts{
 <script>
     $(function () {
-        var columns =@Html.Raw(ViewBag.column);
-        var dataSource = new kendo.data.DataSource({
-            serverFiltering: true,
-            serverPaging: true,
-            serverSorting: true,
-            pageSize: 10,
-            transport: {
-                read: '@Url.Content("~/Users/Get")'
-            },
-        });
-
-        dataSource.read();
-
+        var crudServiceBaseUrl = "@Url.Content("~/Users")";
+        var columns = JSON.parse('@Html.Raw(ViewBag.columns)');
+        columns.push({ command: ["edit", "destroy"], title: "&nbsp;", width: "100" })
+        var models = @Html.Raw(ViewBag.models);
         $("#grid").kendoGrid({
-            dataSource: dataSource,
-            autoBind: false,
-            pageable: true,
-            selectable: true,
-            scrollable: true,
+            dataSource: {
+                serverFiltering: true,
+                serverPaging: true,
+                serverSorting: true,
+                pageSize: 10,
+                transport: {
+                    read: {
+                        url: crudServiceBaseUrl + "/Read"
+                    },
+                    update: {
+                        url: crudServiceBaseUrl + "/Update",
+                        type:"post"
+                    },
+                    destroy: {
+                        url: crudServiceBaseUrl + "/Destroy",
+                        type: "post"
+                    },
+                    create: {
+                        url: crudServiceBaseUrl + "/Create",
+                        type:"post"
+                    }
+                },
+                schema: {
+                    total: "total",
+                    data: "data",
+                    model: models
+                },
+                error: function (e) {
+                    console.log(e.xhr.responseText);
+                    return;
+                }
+            },
+            pageable: {
+                refresh: true
+            },
             sortable: true,
             filterable: true,
+            columnMenu: true,
+            editable: "popup",
+            toolbar: ["create"],
             columns: columns
         });
     });
