@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "用户";
+}
+
+<div id="grid"></div>
+
+@section scripts{
+<script>
+    $(function () {
+        var columns =@Html.Raw(ViewBag.column);
+        var dataSource = new kendo.data.DataSource({
+            serverFiltering: true,
+            serverPaging: true,
+            serverSorting: true,
+            pageSize: 10,
+            transport: {
+                read: '@Url.Content("~/Users/Get")'
+            },
+        });
+
+        dataSource.read();
+
+        $("#grid").kendoGrid({
+            dataSource: dataSource,
+            autoBind: false,
+            pageable: true,
+            selectable: true,
+            scrollable: true,
+            sortable: true,
+            filterable: true,
+            columns: columns
+        });
+    });
+</script>
+    }

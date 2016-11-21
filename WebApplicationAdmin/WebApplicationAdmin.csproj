@@ -169,6 +169,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Dtos\DtoSearch.cs" />
+    <Compile Include="Dtos\DtoUser.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -232,6 +235,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -248,6 +252,10 @@
     <ProjectReference Include="..\IdentityCore\IdentityCore.csproj">
       <Project>{7ff8502e-905a-48e5-8557-f0d3aa326ac5}</Project>
       <Name>IdentityCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebCore\WebCore.csproj">
+      <Project>{651dfed8-4900-41e9-9f36-57190a19d2c2}</Project>
+      <Name>WebCore</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

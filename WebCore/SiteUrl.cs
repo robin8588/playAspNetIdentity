@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace WebCore
         static string version = null;
         static SiteUrl()
         {
-            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            Assembly assembly = Assembly.GetExecutingAssembly();
             version = assembly.GetName().Version.ToString();
         }
 
@@ -19,7 +20,7 @@ namespace WebCore
         {
             get
             {
-                return "http://localhost:{}/";
+                return "http://localhost:{0}";
             }
         }
         private static string API
