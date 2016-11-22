@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="KendoHelper.cs" />
+    <Compile Include="OrderByName.cs" />
     <Compile Include="SiteUrl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

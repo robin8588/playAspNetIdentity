@@ -32,18 +32,32 @@ namespace WebApplicationAdmin.Controllers
             return View();
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<ActionResult> Read(Search dto)
         {
             var data = (from n in DBContext.Users
-                       select new DtoUser
-                       {
-                           Id = n.Id,
-                           UserName = n.UserName,
-                           Email = n.Email,
-                           PhoneNumber = n.PhoneNumber
-                       }).OrderBy(v=>v.Id).Skip(dto.skip).Take(dto.take);
-            return Json(new { total = await data.CountAsync(), data = await data.ToListAsync() },JsonRequestBehavior.AllowGet);
+                        select new DtoUser
+                        {
+                            Id = n.Id,
+                            UserName = n.UserName,
+                            Email = n.Email,
+                            PhoneNumber = n.PhoneNumber
+                        });
+            if (dto.sort!= null && dto.sort.Count > 0)
+            {
+                var s = dto.sort.FirstOrDefault();
+                data =data.OrderByField(s.field ,s.dir);
+            }else
+            {
+                data = data.OrderByField("Id", "desc");
+            }
+            if(dto.filter !=null && dto.filter.filters.Count() > 0)
+            {
+                var v = dto.filter.filters.FirstOrDefault();
+                data = data.FilterByField(dto.filter.filters);
+            }
+            data = data.Skip(dto.skip).Take(dto.take);
+            return Json(new { total = await data.CountAsync(), data = await data.ToListAsync() });
         }
 
         [HttpPost]

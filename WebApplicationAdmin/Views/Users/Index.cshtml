@@ -17,10 +17,10 @@
                 serverFiltering: true,
                 serverPaging: true,
                 serverSorting: true,
-                pageSize: 10,
                 transport: {
                     read: {
-                        url: crudServiceBaseUrl + "/Read"
+                        url: crudServiceBaseUrl + "/Read",
+                        type:"post"
                     },
                     update: {
                         url: crudServiceBaseUrl + "/Update",
@@ -46,11 +46,13 @@
                 }
             },
             pageable: {
+                pageSize: 10,
                 refresh: true
             },
             sortable: true,
-            filterable: true,
-            columnMenu: true,
+            filterable: {
+                extra: false
+            },
             editable: "popup",
             toolbar: ["create"],
             columns: columns

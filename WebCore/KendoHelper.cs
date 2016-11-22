@@ -51,7 +51,7 @@ namespace WebCore
             private set;
         }
 
-        public  KendoFieldArrtibute(string type,bool editable=true)
+        public KendoFieldArrtibute(string type, bool editable = true)
         {
             this.Type = type;
             this.Editable = editable;
@@ -72,6 +72,19 @@ namespace WebCore
         public string dir { get; set; }
     }
 
+    public class Filter
+    {
+        public string logic { get; set; }
+        public List<FilterItem> filters { get; set; }
+    }
+
+    public class FilterItem
+    {
+        public string Field { get; set; }
+        public Op Operator { get; set; }
+        public string Value { get; set; }
+    }
+
     public class Search
     {
         public int take { get; set; }
@@ -79,6 +92,7 @@ namespace WebCore
         public int page { get; set; }
         public int pageSize { get; set; }
         public List<Sort> sort { get; set; }
+        public Filter filter { get; set; }
     }
 
     public class KendoColumnHelper
