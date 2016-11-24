@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebApplicationAdmin.Dtos;
+using WebApplicationAdmin.VMs;
 using WebCore;
 
 namespace WebApplicationAdmin.Controllers
@@ -27,8 +28,8 @@ namespace WebApplicationAdmin.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.columns =JsonConvert.SerializeObject(KendoColumnHelper.GenColumns<DtoUser>());
-            ViewBag.models = KendoColumnHelper.GenModels<DtoUser>();
+            ViewBag.columns =KendoColumnHelper.GenColumns<VMUser>();
+            ViewBag.models = KendoColumnHelper.GenModels<VMUser>();
             return View();
         }
 
@@ -36,12 +37,16 @@ namespace WebApplicationAdmin.Controllers
         public async Task<ActionResult> Read(Search dto)
         {
             var data = (from n in DBContext.Users
-                        select new DtoUser
+                        select new VMUser
                         {
                             Id = n.Id,
                             UserName = n.UserName,
                             Email = n.Email,
-                            PhoneNumber = n.PhoneNumber
+                            EmailConfirmed = n.EmailConfirmed,
+                            PhoneNumber = n.PhoneNumber,
+                            RegistrationDate = n.RegistrationDate,
+                            LockoutEnabled = n.LockoutEnabled,
+                            AccessFailedCount = n.AccessFailedCount
                         });
             if (dto.sort!= null && dto.sort.Count > 0)
             {
@@ -69,9 +74,10 @@ namespace WebApplicationAdmin.Controllers
             user.Email = dto.Email;
             user.PasswordHash = new PasswordHasher().HashPassword("123456");
             user.SecurityStamp = Guid.NewGuid().ToString();
+            user.RegistrationDate = DateTime.Now;
             DBContext.Users.Add(user);
             await DBContext.SaveChangesAsync();
-            DtoUser created = new DtoUser();
+            VMUser created = new VMUser();
             created.Id = user.Id;
             created.UserName = user.UserName;
             created.PhoneNumber = user.PhoneNumber;
@@ -84,14 +90,20 @@ namespace WebApplicationAdmin.Controllers
         {
             var user =await DBContext.Users.FirstOrDefaultAsync(v=>v.Id==dto.Id);
             user.PhoneNumber = dto.PhoneNumber;
+            user.LockoutEnabled = dto.LockoutEnabled;
             DBContext.Entry(user).State = EntityState.Modified;
             await DBContext.SaveChangesAsync();
-            DtoUser created = new DtoUser();
-            created.Id = user.Id;
-            created.UserName = user.UserName;
-            created.PhoneNumber = user.PhoneNumber;
-            created.Email = user.Email;
-            return Json(created);
+            return Json(new VMUser()
+            {
+                AccessFailedCount = user.AccessFailedCount,
+                Email = user.Email,
+                Id = user.Id,
+                LockoutEnabled = user.LockoutEnabled,
+                PhoneNumber = user.PhoneNumber,
+                RegistrationDate = user.RegistrationDate,
+                UserName = user.UserName,
+                EmailConfirmed = user.EmailConfirmed
+            });
         }
 
         [HttpPost]

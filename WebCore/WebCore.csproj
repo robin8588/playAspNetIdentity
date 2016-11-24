@@ -45,8 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="KendoHelper.cs" />
-    <Compile Include="OrderByName.cs" />
+    <Compile Include="DataAnnotations\BaseDataAnnotations.cs" />
+    <Compile Include="KendoUIHelper.cs" />
+    <Compile Include="ExpressionBuilder.cs" />
     <Compile Include="SiteUrl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using System.Data.Entity;
 using IdentityCore.Migrations;
+using System;
 
 namespace IdentityCore
 {
@@ -20,6 +21,8 @@ namespace IdentityCore
         }
 
         public UserNameType UserNameType { get; set; }
+
+        public DateTime RegistrationDate { get; set; }
     }
 
     public enum UserNameType

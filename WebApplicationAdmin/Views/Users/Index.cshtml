@@ -7,13 +7,19 @@
 
 @section scripts{
 <script>
+    function create_click() {
+        console.log("Toolbar command is clicked!");
+        return false;
+    }
+
     $(function () {
         var crudServiceBaseUrl = "@Url.Content("~/Users")";
-        var columns = JSON.parse('@Html.Raw(ViewBag.columns)');
+        var columns = @Html.Raw(ViewBag.columns);
         columns.push({ command: ["edit", "destroy"], title: "&nbsp;", width: "100" })
         var models = @Html.Raw(ViewBag.models);
         $("#grid").kendoGrid({
             dataSource: {
+                pageSize:20,
                 serverFiltering: true,
                 serverPaging: true,
                 serverSorting: true,
@@ -29,10 +35,6 @@
                     destroy: {
                         url: crudServiceBaseUrl + "/Destroy",
                         type: "post"
-                    },
-                    create: {
-                        url: crudServiceBaseUrl + "/Create",
-                        type:"post"
                     }
                 },
                 schema: {
@@ -45,16 +47,20 @@
                     return;
                 }
             },
-            pageable: {
-                pageSize: 10,
-                refresh: true
-            },
+            pageable: true,
             sortable: true,
+            reorderable: true,
+            resizable: true,
+            columnMenu: true,
             filterable: {
                 extra: false
             },
             editable: "popup",
-            toolbar: ["create"],
+            toolbar: [
+                {
+                    template: '<a class="k-button" href="\\#" onclick="return create_click()">新增</a>'
+                }
+            ],
             columns: columns
         });
     });

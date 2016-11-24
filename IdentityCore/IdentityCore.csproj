@@ -96,6 +96,10 @@
     <Compile Include="Migrations\201611180747592_update.Designer.cs">
       <DependentUpon>201611180747592_update.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611230838310_addregdate.cs" />
+    <Compile Include="Migrations\201611230838310_addregdate.Designer.cs">
+      <DependentUpon>201611230838310_addregdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\UserEmailPhoneValidator.cs" />
@@ -112,6 +116,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611180747592_update.resx">
       <DependentUpon>201611180747592_update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611230838310_addregdate.resx">
+      <DependentUpon>201611230838310_addregdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
