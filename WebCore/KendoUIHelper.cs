@@ -10,36 +10,7 @@ using System.Threading.Tasks;
 
 namespace WebCore
 {
-    public class Sort
-    {
-        public string field { get; set; }
-        public string dir { get; set; }
-    }
-
-    public class Filter
-    {
-        public string logic { get; set; }
-        public List<FilterItem> filters { get; set; }
-    }
-
-    public class FilterItem
-    {
-        public string Field { get; set; }
-        public Op Operator { get; set; }
-        public string Value { get; set; }
-    }
-
-    public class Search
-    {
-        public int take { get; set; }
-        public int skip { get; set; }
-        public int page { get; set; }
-        public int pageSize { get; set; }
-        public List<Sort> sort { get; set; }
-        public Filter filter { get; set; }
-    }
-
-    public class KendoColumnHelper
+    public class KendoGridHelper
     {
         public static string GenColumns<T>()
         {
@@ -58,6 +29,11 @@ namespace WebCore
                 }
                 columns.Add(column);
             }
+
+            var command = new JObject();
+            command.Add("command", new JArray("edit", "destroy"));
+            command.Add("title", "&nbsp;");
+            columns.Add(command);
             return columns.ToString() ;
         }
 
@@ -76,7 +52,7 @@ namespace WebCore
             return models.ToString();
         }
 
-        public static JObject GenFeild(PropertyInfo p)
+        private static JObject GenFeild(PropertyInfo p)
         {
             JObject j = new JObject();
 

@@ -12,8 +12,7 @@ namespace WebCore
         static string version = null;
         static SiteUrl()
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            version = assembly.GetName().Version.ToString();
+            version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
         private static string Domain

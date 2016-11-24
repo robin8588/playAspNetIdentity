@@ -8,6 +8,35 @@ using System.Threading.Tasks;
 
 namespace WebCore
 {
+    public class Sort
+    {
+        public string field { get; set; }
+        public string dir { get; set; }
+    }
+
+    public class Filter
+    {
+        public string logic { get; set; }
+        public List<FilterItem> filters { get; set; }
+    }
+
+    public class FilterItem
+    {
+        public string Field { get; set; }
+        public Op Operator { get; set; }
+        public string Value { get; set; }
+    }
+
+    public class Search
+    {
+        public int take { get; set; }
+        public int skip { get; set; }
+        public int page { get; set; }
+        public int pageSize { get; set; }
+        public List<Sort> sort { get; set; }
+        public Filter filter { get; set; }
+    }
+
     public static class OrderByName
     {
         public static IQueryable<T> OrderByField<T>(this IQueryable<T> q, string SortField, string Ascending)

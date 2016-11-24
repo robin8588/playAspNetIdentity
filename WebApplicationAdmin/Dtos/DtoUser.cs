@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoMapper.Attributes;
+using IdentityCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,6 +18,7 @@ namespace WebApplicationAdmin.Dtos
         public string Email { get; set; }
     }
 
+    [MapsTo(typeof(ApplicationUser))]
     public class DtoUserUpdate
     {
         [Required]

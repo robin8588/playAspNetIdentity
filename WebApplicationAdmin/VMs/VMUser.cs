@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoMapper.Attributes;
+using IdentityCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -7,9 +9,9 @@ using System.Web;
 
 namespace WebApplicationAdmin.VMs
 {
+    [MapsFrom(typeof(ApplicationUser))]
     public class VMUser
     {
-
         [Key]
         [Editable(false)]
         [DataType("string")]
@@ -54,6 +56,5 @@ namespace WebApplicationAdmin.VMs
         [DataType("boolean")]
         [DisplayName("锁定功能")]
         public bool LockoutEnabled { get; set; }
-
     }
 }

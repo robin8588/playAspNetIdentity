@@ -1,4 +1,6 @@
-﻿using IdentityCore;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using IdentityCore;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Newtonsoft.Json;
@@ -19,7 +21,6 @@ namespace WebApplicationAdmin.Controllers
     {
         public UsersController()
         {
-
         }
 
         public UsersController(ApplicationDbContext db):base(db)
@@ -28,26 +29,16 @@ namespace WebApplicationAdmin.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.columns =KendoColumnHelper.GenColumns<VMUser>();
-            ViewBag.models = KendoColumnHelper.GenModels<VMUser>();
+            ViewBag.columns =KendoGridHelper.GenColumns<VMUser>();
+            ViewBag.models = KendoGridHelper.GenModels<VMUser>();
             return View();
         }
 
         [HttpPost]
         public async Task<ActionResult> Read(Search dto)
         {
-            var data = (from n in DBContext.Users
-                        select new VMUser
-                        {
-                            Id = n.Id,
-                            UserName = n.UserName,
-                            Email = n.Email,
-                            EmailConfirmed = n.EmailConfirmed,
-                            PhoneNumber = n.PhoneNumber,
-                            RegistrationDate = n.RegistrationDate,
-                            LockoutEnabled = n.LockoutEnabled,
-                            AccessFailedCount = n.AccessFailedCount
-                        });
+            var data = DBContext.Users.AsQueryable(); ;
+                        
             if (dto.sort!= null && dto.sort.Count > 0)
             {
                 var s = dto.sort.FirstOrDefault();
@@ -61,8 +52,9 @@ namespace WebApplicationAdmin.Controllers
                 var v = dto.filter.filters.FirstOrDefault();
                 data = data.FilterByField(dto.filter.filters);
             }
-            data = data.Skip(dto.skip).Take(dto.take);
-            return Json(new { total = await data.CountAsync(), data = await data.ToListAsync() });
+            var total = await data.CountAsync();
+            var result = await data.Skip(dto.skip).Take(dto.take).ProjectToListAsync<VMUser>();
+            return Json(new { total = total, data = result });
         }
 
         [HttpPost]
@@ -89,21 +81,10 @@ namespace WebApplicationAdmin.Controllers
         public async Task<ActionResult> Update(DtoUserUpdate dto)
         {
             var user =await DBContext.Users.FirstOrDefaultAsync(v=>v.Id==dto.Id);
-            user.PhoneNumber = dto.PhoneNumber;
-            user.LockoutEnabled = dto.LockoutEnabled;
+            Mapper.Map(dto, user);
             DBContext.Entry(user).State = EntityState.Modified;
             await DBContext.SaveChangesAsync();
-            return Json(new VMUser()
-            {
-                AccessFailedCount = user.AccessFailedCount,
-                Email = user.Email,
-                Id = user.Id,
-                LockoutEnabled = user.LockoutEnabled,
-                PhoneNumber = user.PhoneNumber,
-                RegistrationDate = user.RegistrationDate,
-                UserName = user.UserName,
-                EmailConfirmed = user.EmailConfirmed
-            });
+            return Json(Mapper.Map<VMUser>(user));
         }
 
         [HttpPost]

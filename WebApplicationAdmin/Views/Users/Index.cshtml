@@ -15,38 +15,38 @@
     $(function () {
         var crudServiceBaseUrl = "@Url.Content("~/Users")";
         var columns = @Html.Raw(ViewBag.columns);
-        columns.push({ command: ["edit", "destroy"], title: "&nbsp;", width: "100" })
         var models = @Html.Raw(ViewBag.models);
-        $("#grid").kendoGrid({
-            dataSource: {
-                pageSize:20,
-                serverFiltering: true,
-                serverPaging: true,
-                serverSorting: true,
-                transport: {
-                    read: {
-                        url: crudServiceBaseUrl + "/Read",
-                        type:"post"
-                    },
-                    update: {
-                        url: crudServiceBaseUrl + "/Update",
-                        type:"post"
-                    },
-                    destroy: {
-                        url: crudServiceBaseUrl + "/Destroy",
-                        type: "post"
-                    }
+        var dataSource ={
+            pageSize:20,
+            serverFiltering: true,
+            serverPaging: true,
+            serverSorting: true,
+            transport: {
+                read: {
+                    url: crudServiceBaseUrl + "/Read",
+                    type:"post"
                 },
-                schema: {
-                    total: "total",
-                    data: "data",
-                    model: models
+                update: {
+                    url: crudServiceBaseUrl + "/Update",
+                    type:"post"
                 },
-                error: function (e) {
-                    console.log(e.xhr.responseText);
-                    return;
+                destroy: {
+                    url: crudServiceBaseUrl + "/Destroy",
+                    type: "post"
                 }
             },
+            schema: {
+                total: "total",
+                data: "data",
+                model: models
+            },
+            error: function (e) {
+                console.log(e.xhr.responseText);
+                return;
+            }
+        };
+        $("#grid").kendoGrid({
+            dataSource:dataSource ,
             pageable: true,
             sortable: true,
             reorderable: true,
