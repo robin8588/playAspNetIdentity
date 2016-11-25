@@ -4,20 +4,19 @@
 }
 
 <div id="grid"></div>
-
+<div id="create">
+    <form></form>
+</div>
 @section scripts{
 <script>
-    function create_click() {
-        console.log("Toolbar command is clicked!");
-        return false;
-    }
-
     $(function () {
         var crudServiceBaseUrl = "@Url.Content("~/Users")";
         var columns = @Html.Raw(ViewBag.columns);
         var models = @Html.Raw(ViewBag.models);
-        var dataSource ={
-            pageSize:20,
+        var create =@Html.Raw(ViewBag.create);
+
+        var dataSource = new kendo.data.DataSource({
+            pageSize:10,
             serverFiltering: true,
             serverPaging: true,
             serverSorting: true,
@@ -41,11 +40,11 @@
                 model: models
             },
             error: function (e) {
-                console.log(e.xhr.responseText);
+                kendo.alert(e.xhr.responseJSON.error);
                 return;
             }
-        };
-        $("#grid").kendoGrid({
+        });
+        var grid = $("#grid").kendoGrid({
             dataSource:dataSource ,
             pageable: true,
             sortable: true,
@@ -55,14 +54,57 @@
             filterable: {
                 extra: false
             },
-            editable: "popup",
+            editable: {
+                mode: "popup",
+                window: {
+                    title: "编辑"
+                }
+            },
             toolbar: [
                 {
-                    template: '<a class="k-button" href="\\#" onclick="return create_click()">新增</a>'
+                    template: '<a class="k-button" href="\\#" id="createbtn"><span class="k-icon k-i-add"></span>新增</a>'
                 }
             ],
             columns: columns
+        }).data("kendoGrid");
+
+        var wnd = $("#create").kendoWindow({
+            title: "新增",
+            modal: true,
+            visible: false,
+            resizable: false,
+            width: 300
+        }).data("kendoWindow");
+
+        $('form').jsonForm({
+            schema: create,
+            form: [
+                "*",
+                {
+                    "type": "submit",
+                    "title": "提交"
+                }   
+            ],
+            onSubmit: function (errors, values) {
+                if (errors) {
+                    console.log(errors);
+                }
+                else {
+                    $.post(crudServiceBaseUrl+'/create',values,function(data){
+                        dataSource.read();
+                        grid.refresh();
+                        wnd.close();
+                        console.log(data);
+                    }).error(function(error){
+                        kendo.alert(error.responseJSON.error);
+                    });
+                }
+            }
         });
+
+        $("#createbtn").click(function(){
+            wnd.center().open();
+        })
     });
 </script>
     }

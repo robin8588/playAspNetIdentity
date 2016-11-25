@@ -12,39 +12,54 @@
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("应用程序名称", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("我的 ASP.NET 应用程序", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav visible-xs">
+                @Html.Partial("_Nav")
+            </ul>
+            @Html.Partial("_LoginPartial")
+        </div>
+    </div>
+    <div class="hidden-xs">
+        <ul class="nav nav-pills nav-stacked">
+            @Html.Partial("_Nav")
+        </ul>
+    </div>
+
+    <div class="container body-content">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">@ViewBag.Title</h3>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("主页", "Index", "Home")</li>
-                    <li>@Html.ActionLink("用户", "Index", "Users")</li>
-                    <li>@Html.ActionLink("关于", "About", "Home")</li>
-                    <li>@Html.ActionLink("联系方式", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+            <div class="panel-body">
+                @RenderBody()
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 应用程序</p>
-        </footer>
-    </div>
+    <br />
+    <footer class="text-left text-muted rights">
+        <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 应用程序</p>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     <script src='@SiteUrl.Content("~/telerik.kendoui.professional.2016.3.1028/js/kendo.all.min.js")'></script>
     <script src='@SiteUrl.Content("~/telerik.kendoui.professional.2016.3.1028/js/cultures/kendo.culture.zh-CN.min.js")'></script>
     <script src='@SiteUrl.Content("~/telerik.kendoui.professional.2016.3.1028/js/messages/kendo.messages.zh-CN.min.js")'></script>
+    @Scripts.Render("~/bundles/jsonform")
+    <script>
+        @{
+            var url = HttpContext.Current.Request.Path;
+        }
+        $('.nav a[href="@url"]').parent().addClass("active");
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -1,12 +1,27 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background:#333;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+    padding:0 0;
+    position: fixed;
+    overflow: hidden;
+    overflow-y: scroll;
+    border-top-left-radius: 5px;
+    box-shadow: 0 0 15px rgba(0,0,0,.6);
+    top: 52px;
+    right: 0;
+    left:150px;
+    bottom: 0;
+    margin:0 0;
+    max-width:100%;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -21,4 +36,24 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.rights{
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+    padding-right: 15px;
+    color: #848690;
+    font-size: 10px;
+}
+
+@media screen and (max-width: 768px){
+    .body-content {
+        left: 0px;
+        top: 50px;
+    }
+
+    .rights{
+        position:inherit;
+    }
 }

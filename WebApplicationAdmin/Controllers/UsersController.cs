@@ -31,6 +31,7 @@ namespace WebApplicationAdmin.Controllers
         {
             ViewBag.columns =KendoGridHelper.GenColumns<VMUser>();
             ViewBag.models = KendoGridHelper.GenModels<VMUser>();
+            ViewBag.create = KendoGridHelper.GenCreateForm<VMUser>();
             return View();
         }
 
@@ -64,17 +65,13 @@ namespace WebApplicationAdmin.Controllers
             user.UserName = dto.Email;
             user.PhoneNumber = dto.PhoneNumber;
             user.Email = dto.Email;
+            user.LockoutEnabled = true;
             user.PasswordHash = new PasswordHasher().HashPassword("123456");
             user.SecurityStamp = Guid.NewGuid().ToString();
             user.RegistrationDate = DateTime.Now;
             DBContext.Users.Add(user);
             await DBContext.SaveChangesAsync();
-            VMUser created = new VMUser();
-            created.Id = user.Id;
-            created.UserName = user.UserName;
-            created.PhoneNumber = user.PhoneNumber;
-            created.Email = user.Email;
-            return Json(created);
+            return Json(new { });
         }
 
         [HttpPost]

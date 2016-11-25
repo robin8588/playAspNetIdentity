@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Extension;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -17,17 +18,7 @@ namespace WebCore
             JArray columns = new JArray();
             foreach (var m in typeof(T).GetProperties())
             {
-                JObject column = new JObject();
-                var title = m.GetCustomAttribute<DisplayNameAttribute>();
-                column.Add("field", m.Name);
-                column.Add("title", title.DisplayName);
-
-                var format = m.GetCustomAttribute<DisplayFormatAttribute>();
-                if (format!= null)
-                {
-                    column.Add("format", format.DataFormatString);
-                }
-                columns.Add(column);
+                columns.Add(BuildColumn(m));
             }
 
             var command = new JObject();
@@ -35,6 +26,33 @@ namespace WebCore
             command.Add("title", "&nbsp;");
             columns.Add(command);
             return columns.ToString() ;
+        }
+
+        private static JObject BuildColumn(PropertyInfo p)
+        {
+            JObject column = new JObject();
+            column.Add("field", p.Name);
+            foreach (var a in p.GetCustomAttributes())
+            {
+                switch (a.GetType().FullName)
+                {
+                    case "System.ComponentModel.DisplayNameAttribute":
+                        column.Add("title", ((DisplayNameAttribute)a).DisplayName);
+                        break;
+                    case "System.ComponentModel.DataAnnotations.DisplayFormatAttribute":
+                        column.Add("format", ((DisplayFormatAttribute)a).DataFormatString);
+                        break;
+                    case "System.ComponentModel.DataAnnotations.Extension.HiddenAttribute":
+                        column.Add("hidden", ((HiddenAttribute)a).Hidden);
+                        break;
+                    case "System.ComponentModel.DataAnnotations.Extension.ColumnWidthAttribute":
+                        column.Add("width", ((ColumnWidthAttribute)a).Width);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return column;
         }
 
         public static string GenModels<T>()
@@ -79,6 +97,45 @@ namespace WebCore
                 }
             }
             return j;
+        }
+
+        public static string GenCreateForm<T>()
+        {
+            JObject schema = new JObject();
+            
+            foreach (var m in typeof(T).GetProperties())
+            {
+                var c = m.GetCustomAttribute<CreatableAttribute>();
+                if (c != null)
+                {
+                    schema.Add(m.Name, GenCreateInput(m));
+                }
+            }
+            return schema.ToString();
+        }
+
+        private static JObject GenCreateInput(PropertyInfo p)
+        {
+            JObject property = new JObject();
+
+            foreach (var a in p.GetCustomAttributes())
+            {
+                switch (a.GetType().FullName)
+                {
+                    case "System.ComponentModel.DisplayNameAttribute":
+                        property.Add("title", ((DisplayNameAttribute)a).DisplayName);
+                        break;
+                    case "System.ComponentModel.DataAnnotations.DataTypeAttribute":
+                        property.Add("type", (a as DataTypeAttribute).CustomDataType);
+                        break;
+                    case "System.ComponentModel.DataAnnotations.RequiredAttribute":
+                        property.Add("required", true);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return property;
         }
     }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Extension;
 using System.Linq;
 using System.Web;
 
@@ -16,6 +17,7 @@ namespace WebApplicationAdmin.VMs
         [Editable(false)]
         [DataType("string")]
         [DisplayName("ID")]
+        [Hidden(true)]
         public string Id { get; set; }
 
         [Editable(false)]
@@ -27,6 +29,7 @@ namespace WebApplicationAdmin.VMs
         [Editable(false)]
         [DataType("string")]
         [DisplayName("电子邮箱")]
+        [Creatable]
         public string Email { get; set; }
 
 
@@ -35,9 +38,11 @@ namespace WebApplicationAdmin.VMs
         [DisplayName("邮箱确认")]
         public bool EmailConfirmed { get; internal set; }
 
+        [Required]
         [Editable(true)]
         [DataType("string")]
         [DisplayName("手机号")]
+        [Creatable]
         public string PhoneNumber { get; set; }
 
         [Editable(false)]
