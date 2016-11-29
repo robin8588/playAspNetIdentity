@@ -10,7 +10,8 @@ namespace WebApplicationAPI
         public static void Register(HttpConfiguration config)
         {
             // Web API 配置和服务
-
+            var json = config.Formatters.JsonFormatter;
+            json.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
             // Web API 路由
             config.MapHttpAttributeRoutes();
 
